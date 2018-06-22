@@ -1,7 +1,5 @@
 package com.codecool;
 
-import java.util.Random;
-
 public class Vehicle {
     private int normalSpeed;
     private String name;

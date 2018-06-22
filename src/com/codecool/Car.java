@@ -1,7 +1,5 @@
 package com.codecool;
 
-import java.util.Random;
-
 public class Car extends Vehicle {
 
     private String[] cardNames = FileHandler.readNames();

@@ -1,7 +1,5 @@
 package com.codecool;
 
-import java.util.Random;
-
 public class Truck extends Vehicle {
 
     private int breakdownTurnsLeft = 0;
