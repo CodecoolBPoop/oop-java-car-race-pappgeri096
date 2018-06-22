@@ -17,6 +17,6 @@ public class Motorcycle extends Vehicle {
 
     public void slowerSpeed() {
         setNormalSpeed(100);
-        setNormalSpeed(getNormalSpeed()-Random.generateRandomNumber(5,50));
+        setNormalSpeed(getNormalSpeed()-Math.generateRandomNumber(5,50));
     }
 }

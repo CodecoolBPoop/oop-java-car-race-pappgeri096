@@ -1,11 +1,13 @@
 package com.codecool;
 
+import java.util.Random;
+
 public class Car extends Vehicle {
 
     private String[] cardNames = FileHandler.readNames();
 
     private String generateCarName() {
-        String carName = String.format("%s %s", cardNames[Random.generateRandomNumber(0, cardNames.length)], cardNames[Random.generateRandomNumber(0, cardNames.length)]);
+        String carName = String.format("%s %s", cardNames[Math.generateRandomNumber(0, cardNames.length)], cardNames[Math.generateRandomNumber(0, cardNames.length)]);
         return carName;
     }
 
@@ -17,7 +19,7 @@ public class Car extends Vehicle {
 
 
     public int generateSpeed() {
-        return Random.generateRandomNumber(80,110);
+        return Math.generateRandomNumber(80,110);
     }
 
 }

@@ -2,36 +2,61 @@ package com.codecool;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Stack;
 
 public class Race {
-
-    private List<Car> cars = new ArrayList();
-    private List<Motorcycle> motors = new ArrayList();
-    private List<Truck> trucks = new ArrayList();
+    private List<Vehicle> vehicles = new ArrayList<>();
     private boolean truckBrooken = false;
 
     public void createVehicles() {
 
         for(int i = 0; i < 10; i++) {
             Car car = new Car();
-            cars.add(car);
-        }
-
-
-        for(int i = 0; i < 10; i++) {
             Motorcycle motor = new Motorcycle();
-            motors.add(motor);
-        }
-
-
-        for(int i = 0; i < 10; i++) {
             Truck truck = new Truck();
-            trucks.add(truck);
+
+            vehicles.add(car);
+            vehicles.add(motor);
+            vehicles.add(truck);
         }
 
+    }
 
+    private void moveCar(Vehicle vehicle) {
+        Car car = (Car) vehicle;
+        if (isThereABrokenTruck())
+            car.setNormalSpeed(75);
+        else
+            car.setNormalSpeed(((Car) vehicle).generateSpeed());
+        car.moveForAnHour();
+    }
+
+    private void  moveMotor(Vehicle vehicle) {
+        Motorcycle motor = (Motorcycle) vehicle;
+        if(Weather.isRaining())
+            motor.slowerSpeed();
+        else
+            motor.setNormalSpeed(100);
+        motor.moveForAnHour();
+    }
+
+    private void moveTruck(Vehicle vehicle) {
+        Truck truck = (Truck) vehicle;
+
+        if(!truck.isTruckBrooken()) {
+
+            if(!truck.randomBrokeDown()){
+                vehicle.moveForAnHour();
+            }
+
+        }   else{
+            truck.setBreakdownTurnsLeft(((Truck) vehicle).getBreakdownTurnsLeft()-1);
+            truckBrooken = true;
+
+            if(truck.isTruckWorksAgain()) {
+                truck.setTruckBrooken(false);
+                truckBrooken = false;
+            }
+        }
     }
 
     public void simulateRace() {
@@ -40,69 +65,26 @@ public class Race {
 
             Weather.setRaining();
 
-            for(Car car : cars) {
+            for(Vehicle vehicle : vehicles) {
 
-                if(isThereABrokenTruck()) {
-                    car.setNormalSpeed(75);
-                } else {
-                    car.setNormalSpeed(car.generateSpeed());
-                }
-
-                car.moveForAnHour();
+                if(vehicle instanceof Car)
+                   moveCar(vehicle);
+                else if (vehicle instanceof Motorcycle)
+                    moveMotor(vehicle);
+                else
+                    moveTruck(vehicle);
             }
-
-            for(Motorcycle motor : motors){
-
-                if(Weather.isRaining()) {
-                    motor.slowerSpeed();
-                } else {
-                    motor.setNormalSpeed(100);
-                }
-
-                motor.moveForAnHour();
-            }
-
-            for(Truck truck : trucks){
-                if(!truck.isTruckBrooken()) {
-
-                    if(!truck.randomBrokeDown()) {
-
-                        truck.moveForAnHour();
-
-                    }
-
-                } else {
-                    truck.setBreakdownTurnsLeft(truck.getBreakdownTurnsLeft()-1);
-                    truckBrooken = true;
-
-                    if(truck.isTruckWorksAgain()) {
-                        truck.setTruckBrooken(false);
-                        truckBrooken = false;
-                    }
-                }
-            }
-
-
 
         }
 
     }
 
     public void printRaceResults(){
-        for(Car car : cars) {
-            System.out.print(car.getName() + " | Car |");
-            System.out.println(car.getDistanceTraveled());
+        for(Vehicle vehicle : vehicles) {
+            System.out.print(vehicle.getName() + " | " + vehicle.getClass().getSimpleName() +" |");
+            System.out.println(vehicle.getDistanceTraveled());
         }
 
-        for(Motorcycle motor : motors){
-            System.out.print(motor.getName() + " | Motorcycle |");
-            System.out.println(motor.getDistanceTraveled());
-        }
-
-        for(Truck truck : trucks){
-            System.out.print(truck.getName() + " | Truck |");
-            System.out.println(truck.getDistanceTraveled());
-        }
     }
 
     public boolean isThereABrokenTruck() {
@@ -110,7 +92,6 @@ public class Race {
     }
 
     public static void main(String[] args) {
-	// write your code here
         Race vehicles = new Race();
         vehicles.createVehicles();
         vehicles.simulateRace();

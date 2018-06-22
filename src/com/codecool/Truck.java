@@ -1,5 +1,7 @@
 package com.codecool;
 
+import java.util.Random;
+
 public class Truck extends Vehicle {
 
     private int breakdownTurnsLeft = 0;
@@ -7,7 +9,7 @@ public class Truck extends Vehicle {
 
     public Truck() {
         setNormalSpeed(100);
-        setName(""+Random.generateRandomNumber(0,1000));
+        setName(""+Math.generateRandomNumber(0,1000));
         setDistanceTraveled(0);
 
     }
@@ -34,7 +36,7 @@ public class Truck extends Vehicle {
     }
 
     public boolean randomBrokeDown() {
-        if(Probability.probability(5,95)) {
+        if(Math.probabilityCalculator(5)) {
             setBreakdownTurnsLeft(2);
             isTruckBrooken = true;
             return true;

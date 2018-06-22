@@ -6,7 +6,7 @@ public class Weather {
 
 
     public static void setRaining() {
-        isRaining = Probability.probability(30,70);
+        isRaining = Math.probabilityCalculator(30);
     }
 
     public static boolean isRaining() {
