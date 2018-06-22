@@ -1,6 +1,6 @@
 package com.codecool;
 
-public class Vehicle {
+public abstract class Vehicle {
     private int normalSpeed;
     private String name;
     private int distanceTraveled;
